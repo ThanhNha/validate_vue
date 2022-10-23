@@ -91,40 +91,49 @@
                   type="radio"
                   class="form-check-input"
                   id="visa"
-                  name="radio-stacked"
-                  required
+                  v-model="payment"
+                  value="visa"
                 />
-                <label class="form-check-label" for="visa">Visa</label>
+                <label
+                  class="form-check-label"
+                  :class="v$.payment.$error ? 'invalid-check' : ''"
+                  for="visa"
+                  >Visa</label
+                >
               </div>
               <div class="form-check ms-3">
                 <input
                   type="radio"
                   class="form-check-input"
                   id="mastercard"
-                  name="radio-stacked"
-                  required
+                  v-model="payment"
+                  value="mastercard"
                 />
-                <label class="form-check-label" for="mastercard"
+                <label
+                  class="form-check-label"
+                  :class="v$.payment.$error ? 'invalid-check' : ''"
+                  for="mastercard"
                   >Mastercard</label
                 >
-
-                <div class="invalid-feedback">
-                  More example invalid feedback text
-                </div>
               </div>
               <div class="form-check ms-3">
                 <input
                   type="radio"
                   class="form-check-input"
                   id="amex"
-                  name="radio-stacked"
-                  required
+                  value="amex"
+                  v-model="payment"
                 />
-                <label class="form-check-label" for="amex">Amex</label>
-                <div class="invalid-feedback">
-                  More example invalid feedback text
-                </div>
+                <label
+                  class="form-check-label"
+                  :class="v$.payment.$error ? 'invalid-check' : ''"
+                  for="amex"
+                  >Amex</label
+                >
               </div>
+            </div>
+            <div v-if="v$.payment.$error" class="invalid-check mt-2">
+              <span>Please choose your payment</span>
             </div>
           </div>
         </div>
@@ -303,6 +312,9 @@ export default {
       phone: {
         required,
       },
+      payment: {
+        required,
+      },
     };
   },
   methods: {
@@ -325,6 +337,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.invalid-check {
+  color: red;
+}
 .form-label {
   text-transform: uppercase;
   font-weight: bold;
@@ -333,6 +348,13 @@ export default {
     color: red;
     font-weight: bold;
   }
+}
+.form-check-input:checked[type="radio"] {
+  background-image: url(../assets/icon.svg);
+}
+.form-check-input:checked[type="radio"] {
+  background-color: transparent;
+  border: 1px solid #319e5e;
 }
 .btn-submit {
   background: #319e5e;

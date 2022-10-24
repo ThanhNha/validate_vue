@@ -5,17 +5,31 @@
         <img alt="Form Background" src="./assets/bg.jpeg" class="bg-img" />
       </div>
       <div class="wrapper-form">
-        <FormValidate />
+        <FormValidate v-if="!done"   @done="options"/>
+        <CompletePage   v-if="done"/>
       </div>
     </div>
+
   </div>
+  
 </template>
 
 <script>
 import FormValidate from "./components/FormValidate.vue";
+import CompletePage from "./components/CompletePage.vue";
 export default {
   name: "App",
-  components: { FormValidate },
+  components: { FormValidate,CompletePage },
+  data(){
+    return{
+      done: false,
+    }
+  },
+  methods:{
+    options(data){
+    this.done = data
+    }
+  }
 };
 </script>
 
@@ -31,6 +45,7 @@ export default {
   }
   .bg-form {
     background: #fff;
+    position: relative;
   }
 }
 .wrapper-image {

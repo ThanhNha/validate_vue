@@ -1,6 +1,12 @@
 <template>
   <div class="range-input">
-    <Slider v-model="value" :min="0" :max="1000" :format="format" />
+    <Slider
+      v-model="value"
+      :min="0"
+      :max="1000"
+      :format="format"
+      @update="$emit('range-value', value)"
+    />
   </div>
 </template>
 
@@ -11,15 +17,24 @@ export default {
   components: {
     Slider,
   },
+  props: {
+    rangeValue:{
+      type: Number,
+      default: 500
+    } 
+  },
   data() {
     return {
-      value: 500,
+      value: this.rangeValue,
       format: {
         prefix: "$ ",
         decimals: 0,
       },
     };
   },
+  updated(){
+    this.value = this.rangeValue;
+  }
 };
 </script>
 

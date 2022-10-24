@@ -176,6 +176,7 @@
             <input
               type="text"
               id="cardnumber"
+              maxLength="10"
               class="form-control form-custom"
               placeholder="Enter your card number"
               @keypress="onlyNumber"
@@ -235,11 +236,11 @@
             >
             <MothYear
               @ex-value="exSelect"
-              @blur="v$.formValue.expiration.year.$touch()"
-              :state="v$.formValue.expiration.year.$error"
+              @blur="v$.formValue.expiration.$touch()"
+              :state="v$.formValue.expiration.$error"
             />
             <div class="invalid-check mt-1">
-              <span v-if="v$.formValue.expiration.year.$error"
+              <span v-if="v$.formValue.expiration.$error"
                 >Expiration month is required</span
               >
             </div>
@@ -386,10 +387,7 @@ export default {
         payment: null,
         cardnumber: null,
         cvn: null,
-        expiration: {
-          month: null,
-          year: null,
-        },
+        expiration: null,
         bonus: 500,
       },
     };
@@ -428,8 +426,7 @@ export default {
           maxLength: maxLength(3),
         },
         expiration: {
-          month: { required },
-          year: { required },
+          required,
         },
       },
     };
@@ -459,8 +456,7 @@ export default {
     },
     exSelect(data) {
       if (data) {
-        this.formValue.expiration.month = data.month + 1;
-        this.formValue.expiration.year = data.year;
+        this.formValue.expiration = data;
       }
     },
     updateRangeInput(data) {

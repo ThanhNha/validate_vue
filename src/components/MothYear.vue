@@ -2,11 +2,10 @@
   <Datepicker
     v-model="getValue"
     @blur="$emit('ex-value', getValue)"
-    type="month"
-    format="MM-yyyy"
     :state="this.error"
     :minDate="minDate"
     :flow="flow"
+    placeholder="Select Month"
   ></Datepicker>
 </template>
 
@@ -27,10 +26,7 @@ export default {
   data() {
     return {
       error: null,
-      getValue: ref({
-        month: null,
-        year: null,
-      }),
+      getValue: ref(),
       minDate: ref(
         new Date(
           new Date().getFullYear(),

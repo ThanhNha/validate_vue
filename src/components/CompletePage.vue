@@ -9,8 +9,8 @@
       </p>
       <hr />
       <p class="mb-0">
-        Whenever you need to, be sure to use margin utilities to keep things
-        nice and tidy.
+       
+        Please click  <a href="https://github.com/ThanhNha/validate_vue" class="alert-link">here</a> to see my source on Github
       </p>
     </div>
   </div>

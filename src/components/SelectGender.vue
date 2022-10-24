@@ -59,8 +59,8 @@ export default {
   width: 100%;
   text-align: left;
   outline: none;
-  height: 38px;
-  line-height: 38px;
+  height: 45px;
+  line-height: 45px;
 }
 
 .custom-select .selected {

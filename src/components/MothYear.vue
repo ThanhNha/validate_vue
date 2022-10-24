@@ -7,7 +7,6 @@
     :state="this.error"
     :minDate="minDate"
     :flow="flow"
-    monthPicker
   ></Datepicker>
 </template>
 

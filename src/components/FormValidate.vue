@@ -12,7 +12,7 @@
               type="text"
               id="firstname"
               v-model="formValue.firstname"
-              class="form-control"
+              class="form-control form-custom"
               placeholder="Enter your first name"
               :class="{
                 'is-invalid': v$.formValue.firstname.$error,
@@ -58,7 +58,7 @@
             <input
               type="text"
               id="lastname"
-              class="form-control"
+              class="form-control form-custom"
               placeholder="Enter your last name"
               v-model="formValue.lastname"
               :class="{
@@ -148,7 +148,7 @@
             <input
               type="text"
               id="company"
-              class="form-control"
+              class="form-control form-custom"
               placeholder="Enter your company name"
               v-model="formValue.company"
               :class="{
@@ -176,10 +176,11 @@
             <input
               type="text"
               id="cardnumber"
-              class="form-control"
+              class="form-control form-custom"
               placeholder="Enter your card number"
               @keypress="onlyNumber"
               v-model="formValue.cardnumber"
+              @blur="v$.formValue.cardnumber.$touch()"
               :class="{
                 'is-invalid': v$.formValue.cardnumber.$error,
                 'is-valid': !v$.formValue.cardnumber.$invalid,
@@ -205,7 +206,7 @@
               type="text"
               id="email"
               placeholder="Enter your email"
-              class="form-control"
+              class="form-control form-custom"
               v-model="formValue.email"
               :class="{
                 'is-invalid': v$.formValue.email.$error,
@@ -254,8 +255,9 @@
               @keypress="onlyNumber"
               type="text"
               id="tel"
+              maxlength="10"
               placeholder="Enter your phone number"
-              class="form-control"
+              class="form-control form-custom"
               v-model="formValue.phone"
               :class="{
                 'is-invalid': v$.formValue.phone.$error,
@@ -270,10 +272,18 @@
               <span v-if="v$.formValue.phone.required.$invalid"
                 >Phone number is required</span
               >
-              <span v-if="v$.formValue.phone.minLength.$invalid"
-                >Phone number min
-                {{ v$.formValue.phone.minLength.$params.min }} number</span
+              <span v-if="v$.formValue.phone.maxLength.$invalid">
+                Phone number max
+                {{ v$.formValue.phone.maxLength.$params.max }} number</span
               >
+              <span
+                v-if="
+                  !v$.formValue.phone.required.$invalid &&
+                  v$.formValue.phone.handlePhone.$invalid
+                "
+              >
+                Phone number must be start with 0
+              </span>
             </div>
           </div>
         </div>
@@ -286,10 +296,12 @@
             <input
               type="text"
               id="cvn"
-              class="form-control"
+              maxLength="3"
+              class="form-control form-custom"
               @keypress="onlyNumber"
               placeholder="Enter your Cvn number"
               v-model="formValue.cvn"
+              @blur="v$.formValue.cvn.$touch()"
               :class="{
                 'is-invalid': v$.formValue.cvn.$error,
                 'is-valid': !v$.formValue.cvn.$invalid,
@@ -301,6 +313,10 @@
             <div class="invalid-feedback">
               <span v-if="v$.formValue.cvn.required.$invalid"
                 >Cvn number is required</span
+              >
+              <span v-if="v$.formValue.cvn.maxLength.$invalid">
+                Cvn number max
+                {{ v$.formValue.cvn.maxLength.$params.max }} number</span
               >
             </div>
           </div>
@@ -319,7 +335,11 @@
       </div>
       <!-- Submit button -->
       <div class="d-flex justify-content-end align-items-center mt-5">
-        <button v-show="!loadding" type="submit" class="btn btn-submit btn-primary btn-block ms-4">
+        <button
+          v-show="!loadding"
+          type="submit"
+          class="btn btn-submit btn-primary btn-block ms-4"
+        >
           Submit
         </button>
         <div v-show="loadding" class="text-center ms-4">
@@ -343,7 +363,8 @@ import SelectGender from "./SelectGender.vue";
 import MothYear from "./MothYear.vue";
 import RangeSlider from "./RangeSlider.vue";
 import useValidate from "@vuelidate/core";
-import { required, maxLength, minLength, email } from "@vuelidate/validators";
+import { handlePhone } from "../plugins/validators/index";
+import { required, maxLength, email } from "@vuelidate/validators";
 export default {
   name: "FormValidate",
   components: {
@@ -393,7 +414,8 @@ export default {
         },
         phone: {
           required,
-          minLength: minLength(10),
+          maxLength: maxLength(10),
+          handlePhone,
         },
         payment: {
           required,
@@ -403,6 +425,7 @@ export default {
         },
         cvn: {
           required,
+          maxLength: maxLength(3),
         },
         expiration: {
           month: { required },
@@ -465,6 +488,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.form-group {
+  height: 80px;
+}
+.form-custom {
+  padding: 10px 12px;
+}
 .invalid-check {
   color: #dc3545;
   font-size: 14px;
@@ -497,8 +526,8 @@ export default {
     border-color: #0d6331;
   }
 }
-.btn-loading{
-  border-color:  #319e5e;
+.btn-loading {
+  border-color: #319e5e;
   border-right-color: transparent;
 }
 .btn-reset {

@@ -6,6 +6,7 @@
     :minDate="minDate"
     :flow="flow"
     placeholder="Select Month"
+    monthPicker
   ></Datepicker>
 </template>
 
@@ -46,12 +47,18 @@ export default {
 };
 </script>
 <style lang="scss">
-.dp__input_invalid {
-  border-color: #dc3545;
-  box-shadow: none;
-}
-.dp__input_valid {
-  border-color: #198754;
-  box-shadow: none;
+.dp__input {
+  padding: 10px 12px;
+  &.dp__input_icon_pad {
+    padding-left: 35px;
+  }
+  &.dp__input_invalid {
+    border-color: #dc3545;
+    box-shadow: none;
+  }
+  &.dp__input_valid {
+    border-color: #198754;
+    box-shadow: none;
+  }
 }
 </style>

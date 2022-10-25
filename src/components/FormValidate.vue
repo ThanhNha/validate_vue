@@ -473,10 +473,7 @@ export default {
         payment: null,
         cardnumber: null,
         cvn: null,
-        expiration: {
-          month: null,
-          year: null,
-        },
+        expiration: null,
         bonus: 500,
       };
     },
@@ -486,30 +483,32 @@ export default {
 <style lang="scss" scoped>
 .form-group {
   height: 80px;
+
+  .invalid-check {
+    color: #dc3545;
+    font-size: 14px;
+  }
+  .form-label {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    .required-input {
+      color: #dc3545;
+      font-weight: bold;
+    }
+  }
+  .form-check-input:checked[type="radio"] {
+    background-image: url(../assets/icon.svg);
+  }
+  .form-check-input:checked[type="radio"] {
+    background-color: transparent;
+    border: 1px solid #319e5e;
+  }
 }
 .form-custom {
   padding: 10px 12px;
 }
-.invalid-check {
-  color: #dc3545;
-  font-size: 14px;
-}
-.form-label {
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 14px;
-  .required-input {
-    color: #dc3545;
-    font-weight: bold;
-  }
-}
-.form-check-input:checked[type="radio"] {
-  background-image: url(../assets/icon.svg);
-}
-.form-check-input:checked[type="radio"] {
-  background-color: transparent;
-  border: 1px solid #319e5e;
-}
+
 .btn-submit {
   background: #319e5e;
   border: none;
